@@ -1,11 +1,5 @@
 import { prisma } from "@/config";
 
-async function enrollmentById(userId: number) {
-  return prisma.enrollment.findFirst({
-    where: { userId },
-  });
-}
-
 async function ticketsType() {
   return prisma.ticketType.findMany();
 }
@@ -21,10 +15,23 @@ async function ticketsByIdEnrollment(id: number) {
   });
 }
 
+async function postTicket(enrollmentId: number, ticketTypeId: number) {
+  return prisma.ticket.create({
+    data: {
+      enrollmentId,
+      ticketTypeId,
+      status: "RESERVED"
+    },
+    include: {
+      TicketType: true
+    }
+  });
+}
+
 const ticketsRepository = {
-  enrollmentById,
   ticketsType,
   ticketsByIdEnrollment,
+  postTicket,
 };
 
 export default ticketsRepository;

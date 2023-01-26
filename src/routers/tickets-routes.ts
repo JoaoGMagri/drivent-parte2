@@ -1,12 +1,13 @@
 import { Router } from "express";
-import { authenticateToken, /* validateBody */ } from "@/middlewares";
-import { getTicketsType, getTicketsById } from "@/controllers/tickets-controller";
+import { authenticateToken } from "@/middlewares";
+import { getTicketsType, getTicketsById, postTickets } from "@/controllers/tickets-controller";
 
 const ticketsRouter = Router();
 
 ticketsRouter
   .all("/*", authenticateToken)
   .get("/types", getTicketsType)
-  .get("/", getTicketsById);
+  .get("/", getTicketsById)
+  .post("/", postTickets);
 
 export { ticketsRouter };
