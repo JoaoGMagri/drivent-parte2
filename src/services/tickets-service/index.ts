@@ -1,7 +1,11 @@
+import { notFoundError } from "@/errors";
 import ticketsRepository from "@/repositories/tickets-repository";
 
-async function ticketsById(userId: number) {
-  const tickets = await ticketsRepository.ticketsById(userId);
+async function ticketsById( ) {
+  const tickets = await ticketsRepository.ticketsById();
+  if(!tickets) {
+    throw notFoundError();
+  }
   return tickets;
 }
 
