@@ -6,13 +6,25 @@ async function enrollmentById(userId: number) {
   });
 }
 
-async function ticketsById() {
+async function ticketsType() {
   return prisma.ticketType.findMany();
+}
+
+async function ticketsByIdEnrollment(id: number) {
+  return prisma.ticket.findMany({
+    where: {
+      enrollmentId: id,
+    },
+    include: {
+      TicketType: true,
+    },
+  });
 }
 
 const ticketsRepository = {
   enrollmentById,
-  ticketsById,
+  ticketsType,
+  ticketsByIdEnrollment,
 };
 
 export default ticketsRepository;
